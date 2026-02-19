@@ -9,7 +9,7 @@ const formulario = document.getElementById('calculator__form')
 
 
 
-function mostrarResultado(mensagem){
+function mostrarResultado(mensagem) {
     textoResultado.textContent = mensagem;
 }
 
@@ -18,15 +18,15 @@ function calcularIMC() {
 
     const peso = parseFloat(inputPeso.value)
     const altura = parseFloat(inputAltura.value)
-    const imc =  
-    console.log(`Seu IMC é: ${imc.toFixed(2)}`)
-    classificaIMC()
-}
 
+    if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+        mostrarResultado('Por favor, insira valores válidos.')
+        return
+    }
 
-
-function classificaIMC() {
-    let classificacao = 'Dados invalidos'
+    // Calculo
+    const imc = peso / (altura * altura);
+    let classificacao = ''
     // Classificar o IMC
     if (imc < 18.5) {
         classificacao = 'Abaixo do peso';
@@ -38,7 +38,17 @@ function classificaIMC() {
         classificacao = 'Obesidade'
     }
 
-    console.log(`${classificacao}`)
+    mostrarResultado(`Seu IMC é ${imc.toFixed(2)} (${classificacao}).`)
 
+
+    console.log(`Seu IMC é: ${imc.toFixed(2)}`)
+    classificaIMC()
 }
 
+
+
+function limparCampos(){
+    formulario.reset();
+    inputPeso.focus();
+    mostrarResultado('Preencha todos os campos e clique em "Calcular".')
+}
